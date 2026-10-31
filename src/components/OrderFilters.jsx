@@ -15,7 +15,15 @@ const Field = ({ label, children }) => (
   </div>
 );
 
-const OrderFilters = ({ filters, onChange, onReset, hasActiveFilters, resultCount, totalCount }) => (
+const OrderFilters = ({
+  filters,
+  onChange,
+  onReset,
+  onExport,
+  hasActiveFilters,
+  resultCount,
+  totalCount,
+}) => (
   <section className="bg-white border border-gray-200 rounded-xl p-4 shadow-sm">
     <div className="grid grid-cols-1 gap-3 md:grid-cols-2 xl:grid-cols-6">
       <div className="space-y-1.5 md:col-span-2">
@@ -96,15 +104,25 @@ const OrderFilters = ({ filters, onChange, onReset, hasActiveFilters, resultCoun
         Menampilkan <span className="font-semibold text-[#2D2D2D]">{resultCount}</span> dari{' '}
         <span className="font-semibold text-[#2D2D2D]">{totalCount}</span> pesanan
       </p>
-      <button
-        type="button"
-        onClick={onReset}
-        disabled={!hasActiveFilters}
-        className="inline-flex items-center justify-center gap-1.5 self-start rounded border border-gray-300 px-3 py-1.5 text-xs font-medium text-gray-600 transition-colors hover:bg-gray-50 disabled:cursor-not-allowed disabled:opacity-40 sm:self-auto"
-      >
-        <i className="ph ph-arrow-counter-clockwise"></i>
-        Reset Filter
-      </button>
+      <div className="flex flex-wrap items-center gap-2">
+        <button
+          type="button"
+          onClick={onExport}
+          className="inline-flex items-center justify-center gap-1.5 rounded bg-[#44A6F1] px-3 py-1.5 text-xs font-medium text-white transition-colors hover:bg-opacity-90"
+        >
+          <i className="ph ph-file-csv"></i>
+          Export CSV
+        </button>
+        <button
+          type="button"
+          onClick={onReset}
+          disabled={!hasActiveFilters}
+          className="inline-flex items-center justify-center gap-1.5 rounded border border-gray-300 px-3 py-1.5 text-xs font-medium text-gray-600 transition-colors hover:bg-gray-50 disabled:cursor-not-allowed disabled:opacity-40"
+        >
+          <i className="ph ph-arrow-counter-clockwise"></i>
+          Reset Filter
+        </button>
+      </div>
     </div>
   </section>
 );

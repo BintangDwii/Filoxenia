@@ -3,6 +3,7 @@ import {
   createOrder,
   cycleOrderStatus,
   deleteOrder,
+  getOrderDetail,
   importOrders,
   listOrders,
   updateOrder,
@@ -18,6 +19,19 @@ router.use(requireAuth);
 router.get('/', (req, res) => {
   res.json({ orders: listOrders() });
 });
+
+router.get(
+  '/:id',
+  asyncHandler(async (req, res) => {
+    const detail = getOrderDetail(req.params.id);
+
+    if (!detail) {
+      return res.status(404).json({ error: 'Pesanan tidak ditemukan.' });
+    }
+
+    return res.json({ order: detail });
+  })
+);
 
 router.post(
   '/',

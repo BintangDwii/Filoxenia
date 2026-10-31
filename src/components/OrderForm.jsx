@@ -16,9 +16,10 @@ const getFormFromOrder = (order) => ({
     order.kategori === 'Buket' ? getBouquetVariant(order.tambahan).value : '-',
   harga: order.harga,
   qty: order.qty,
+  productId: order.productId ? String(order.productId) : '',
 });
 
-const OrderForm = ({ onSubmit, editingOrder, onCancelEdit }) => {
+const OrderForm = ({ onSubmit, editingOrder, onCancelEdit, products = [] }) => {
   const [formData, setFormData] = useState(INITIAL_FORM);
   const [isSubmitting, setIsSubmitting] = useState(false);
   const sectionRef = useRef(null);
@@ -32,7 +33,12 @@ const OrderForm = ({ onSubmit, editingOrder, onCancelEdit }) => {
     }
   }, [editingOrder]);
 
-  const priceHint = getPriceHint(formData.kategori, formData.tambahan);
+  const selectedProduct = products.find(
+    (product) => String(product.id) === String(formData.productId)
+  );
+  const priceHint = selectedProduct
+    ? `Dari resep ${formatRupiah(selectedProduct.pricing.sellingPriceFinal)}`
+    : getPriceHint(formData.kategori, formData.tambahan);
   const isBuket = formData.kategori === 'Buket';
   const isEditing = Boolean(editingOrder);
   const total = Number(formData.harga) * Number(formData.qty);
@@ -43,7 +49,27 @@ const OrderForm = ({ onSubmit, editingOrder, onCancelEdit }) => {
     setFormData((prev) => {
       const next = { ...prev, [name]: value };
 
+      if (name === 'productId') {
+        const product = products.find(
+          (item) => String(item.id) === String(value)
+        );
+
+        if (product) {
+          next.kategori = product.kategori;
+          next.varian = product.varian || prev.varian;
+          next.harga = String(product.pricing.sellingPriceFinal);
+          next.tambahan =
+            product.kategori === 'Buket'
+              ? BUKET_VARIANTS.some((item) => item.value === prev.tambahan)
+                ? prev.tambahan
+                : BUKET_VARIANTS[0].value
+              : '-';
+        }
+      }
+
       if (name === 'kategori') {
+        next.productId = '';
+
         if (value === 'Buket') {
           const defaultVariant = BUKET_VARIANTS[0];
           next.tambahan = defaultVariant.value;
@@ -53,7 +79,11 @@ const OrderForm = ({ onSubmit, editingOrder, onCancelEdit }) => {
         }
       }
 
-      if (name === 'tambahan' && prev.kategori === 'Buket') {
+      if (
+        name === 'tambahan' &&
+        prev.kategori === 'Buket' &&
+        !prev.productId
+      ) {
         next.harga = String(getSuggestedPrice('Buket', value));
       }
 
@@ -110,6 +140,49 @@ const OrderForm = ({ onSubmit, editingOrder, onCancelEdit }) => {
       </div>
 
       <form onSubmit={handleSubmit} className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+        <div className="space-y-3 rounded-lg border border-[#44A6F1]/25 bg-[#F3FAFE] p-4 md:col-span-2 lg:col-span-3">
+          <div className="flex flex-col gap-3 sm:flex-row sm:items-start sm:justify-between">
+            <div>
+              <label className="text-sm font-semibold text-[#2D2D2D]">
+                Hubungkan ke Produk & Resep
+                <span className="ml-1.5 font-normal text-gray-500">(opsional)</span>
+              </label>
+              <p className="mt-0.5 text-xs text-gray-500">
+                Pilih produk agar harga dari HPP otomatis terisi dan stok bahan
+                terpotong saat status pesanan menjadi Selesai.
+              </p>
+            </div>
+            {selectedProduct && (
+              <span className="inline-flex items-center gap-1.5 self-start rounded-full bg-white px-3 py-1 text-xs font-medium text-[#2B7DBA] shadow-sm">
+                <i className="ph ph-check-circle"></i>
+                Snapshot HPP aktif
+              </span>
+            )}
+          </div>
+
+          <select
+            name="productId"
+            value={formData.productId}
+            onChange={handleChange}
+            className="w-full rounded border border-gray-300 bg-white px-4 py-2.5 text-sm text-[#2D2D2D] outline-none transition-all focus:border-[#44A6F1] focus:ring-1 focus:ring-[#44A6F1]"
+          >
+            <option value="">Tanpa produk / hitung manual</option>
+            {products.map((product) => (
+              <option key={product.id} value={product.id}>
+                {product.nama} · {product.kategori} · HJ{' '}
+                {formatRupiah(product.pricing.sellingPriceFinal)}
+              </option>
+            ))}
+          </select>
+
+          {products.length === 0 && (
+            <p className="text-xs text-[#A6805E]">
+              Belum ada produk. Buat dulu di tab Produk & HPP untuk memakai
+              perhitungan otomatis.
+            </p>
+          )}
+        </div>
+
         <div className="space-y-2">
           <label className="text-sm font-medium text-gray-700">Nama Pelanggan</label>
           <input
@@ -207,6 +280,11 @@ const OrderForm = ({ onSubmit, editingOrder, onCancelEdit }) => {
             placeholder="Misal: 15000"
             className="w-full bg-gray-50 border border-gray-300 rounded px-4 py-2.5 focus:border-[#44A6F1] focus:ring-1 focus:ring-[#44A6F1] focus:bg-white outline-none transition-all placeholder:text-gray-400 text-[#2D2D2D]"
           />
+          {selectedProduct && (
+            <p className="text-xs text-gray-500">
+              Harga rekomendasi bisa diubah manual tanpa mengubah data produk.
+            </p>
+          )}
         </div>
 
         <div className="grid grid-cols-2 gap-4">

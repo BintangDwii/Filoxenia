@@ -8,6 +8,7 @@ const getVariantLabel = (order) =>
 const OrderTable = ({
   orders,
   onToggleStatus,
+  onDetail,
   onEdit,
   onDelete,
   hasActiveFilters,
@@ -61,6 +62,12 @@ const OrderTable = ({
                       {getVariantLabel(order)}
                     </span>
                   )}
+                  {order.productNama && (
+                    <span className="mt-1 inline-flex w-fit items-center gap-1 rounded-full bg-[#F1ECFA] px-2 py-0.5 text-[10px] font-medium text-[#7C4DC4]">
+                      <i className="ph ph-flask"></i>
+                      {order.productNama}
+                    </span>
+                  )}
                 </div>
               </td>
               <td className="py-4 px-6 text-sm text-gray-600">{order.varian}</td>
@@ -80,6 +87,15 @@ const OrderTable = ({
               </td>
               <td className="py-4 px-6">
                 <div className="flex items-center justify-center gap-1">
+                  <button
+                    type="button"
+                    onClick={() => onDetail(order)}
+                    title={`Lihat detail ${order.id}`}
+                    aria-label={`Lihat detail pesanan ${order.id}`}
+                    className="rounded p-2 text-[#2B7DBA] transition-colors hover:bg-[#D5F5F9]"
+                  >
+                    <i className="ph ph-eye text-base"></i>
+                  </button>
                   <button
                     type="button"
                     onClick={() => onEdit(order)}

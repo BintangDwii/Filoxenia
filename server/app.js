@@ -5,7 +5,10 @@ import express from 'express';
 import helmet from 'helmet';
 import { config } from './config.js';
 import authRoutes from './routes/auth.js';
+import inventoryRoutes from './routes/inventory.js';
 import orderRoutes from './routes/orders.js';
+import pricingRoutes from './routes/pricing.js';
+import productRoutes from './routes/products.js';
 
 const currentDir = path.dirname(fileURLToPath(import.meta.url));
 const projectRoot = path.resolve(currentDir, '..');
@@ -24,6 +27,9 @@ export const createApp = () => {
 
   app.use('/api/auth', authRoutes);
   app.use('/api/orders', orderRoutes);
+  app.use('/api/inventory', inventoryRoutes);
+  app.use('/api/products', productRoutes);
+  app.use('/api/pricing', pricingRoutes);
 
   app.use('/api', (req, res) => {
     res.status(404).json({ error: 'Endpoint API tidak ditemukan.' });
