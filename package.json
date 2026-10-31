@@ -10,7 +10,8 @@
     "build": "vite build",
     "test": "node --test",
     "start": "NODE_ENV=production node server/index.js",
-    "preview": "npm run build && npm run start"
+    "preview": "npm run build && npm run start",
+    "seed": "node server/seed-orders.js"
   },
   "dependencies": {
     "bcryptjs": "^3.0.3",
