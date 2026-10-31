@@ -61,7 +61,7 @@ const StockForm = ({ material, onSubmit, onCancel, isSubmitting = false }) => {
       </div>
 
       <div className="space-y-2">
-        <label className="text-sm font-medium text-gray-700">
+        <label className="text-sm font-medium text var(--ink-2)">
           Jenis Pergerakan Stok
         </label>
         <div className="grid grid-cols-1 gap-2">
@@ -71,7 +71,7 @@ const StockForm = ({ material, onSubmit, onCancel, isSubmitting = false }) => {
               className={`flex cursor-pointer items-start gap-3 rounded-lg border p-3 transition-colors ${
                 form.tipe === option.value
                   ? 'border-[#44A6F1] bg-[#F3FAFE]'
-                  : 'border-gray-200 hover:bg-gray-50'
+                  : 'border-gray-200 hover:bg var(--surface-hover)'
               }`}
             >
               <input
@@ -86,7 +86,7 @@ const StockForm = ({ material, onSubmit, onCancel, isSubmitting = false }) => {
                 <span className="block text-sm font-medium text-[#2D2D2D]">
                   {option.label}
                 </span>
-                <span className="block text-xs text-gray-500">
+                <span className="block text-xs text var(--muted)">
                   {option.description}
                 </span>
               </span>
@@ -97,7 +97,7 @@ const StockForm = ({ material, onSubmit, onCancel, isSubmitting = false }) => {
 
       <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
         <div className="space-y-2">
-          <label className="text-sm font-medium text-gray-700">
+          <label className="text-sm font-medium text var(--ink-2)">
             {form.tipe === 'penyesuaian'
               ? 'Stok Baru'
               : form.tipe === 'masuk'
@@ -113,17 +113,17 @@ const StockForm = ({ material, onSubmit, onCancel, isSubmitting = false }) => {
             value={form.jumlah}
             onChange={handleChange}
             placeholder="0"
-            className="w-full rounded border border-gray-300 bg-gray-50 px-4 py-2.5 text-sm text-[#2D2D2D] outline-none transition-all placeholder:text-gray-400 focus:border-[#44A6F1] focus:bg-white focus:ring-1 focus:ring-[#44A6F1]"
+            className="w-full rounded border border var(--border) bg var(--surface-hover) px-4 py-2.5 text-sm text-[#2D2D2D] outline-none transition-all placeholder:text var(--muted) focus:border-[#44A6F1] focus:bg-white focus:ring-1 focus:ring-[#44A6F1]"
           />
         </div>
 
         {form.tipe !== 'keluar' && (
           <div className="space-y-2">
-            <label className="text-sm font-medium text-gray-700">
+            <label className="text-sm font-medium text var(--ink-2)">
               Harga per Satuan
             </label>
             <div className="relative">
-              <span className="absolute left-3 top-1/2 -translate-y-1/2 text-xs font-medium text-gray-400">
+              <span className="absolute left-3 top-1/2 -translate-y-1/2 text-xs font-medium text var(--muted)">
                 Rp
               </span>
               <input
@@ -133,24 +133,24 @@ const StockForm = ({ material, onSubmit, onCancel, isSubmitting = false }) => {
                 name="hargaSatuan"
                 value={form.hargaSatuan}
                 onChange={handleChange}
-                className="w-full rounded border border-gray-300 bg-gray-50 py-2.5 pl-10 pr-4 text-sm text-[#2D2D2D] outline-none transition-all focus:border-[#44A6F1] focus:bg-white focus:ring-1 focus:ring-[#44A6F1]"
+                className="w-full rounded border border var(--border) bg var(--surface-hover) py-2.5 pl-10 pr-4 text-sm text-[#2D2D2D] outline-none transition-all focus:border-[#44A6F1] focus:bg-white focus:ring-1 focus:ring-[#44A6F1]"
               />
             </div>
-            <p className="text-xs text-gray-500">
+            <p className="text-xs text var(--muted)">
               Perbarui jika harga beli bahan berubah. HPP produk ikut menyesuaikan.
             </p>
           </div>
         )}
 
         <div className="space-y-2 sm:col-span-2">
-          <label className="text-sm font-medium text-gray-700">Catatan</label>
+          <label className="text-sm font-medium text var(--ink-2)">Catatan</label>
           <input
             type="text"
             name="catatan"
             value={form.catatan}
             onChange={handleChange}
             placeholder="Contoh: Beli di toko A / stok opname akhir bulan."
-            className="w-full rounded border border-gray-300 bg-gray-50 px-4 py-2.5 text-sm text-[#2D2D2D] outline-none transition-all placeholder:text-gray-400 focus:border-[#44A6F1] focus:bg-white focus:ring-1 focus:ring-[#44A6F1]"
+            className="w-full rounded border border var(--border) bg var(--surface-hover) px-4 py-2.5 text-sm text-[#2D2D2D] outline-none transition-all placeholder:text var(--muted) focus:border-[#44A6F1] focus:bg-white focus:ring-1 focus:ring-[#44A6F1]"
           />
         </div>
       </div>
@@ -159,7 +159,7 @@ const StockForm = ({ material, onSubmit, onCancel, isSubmitting = false }) => {
         className={`rounded-lg border p-4 text-sm ${
           nextStock < 0
             ? 'border-[#D15B2D]/30 bg-[#FCE9DF] text-[#D15B2D]'
-            : 'border-gray-200 bg-gray-50 text-gray-600'
+            : 'border-gray-200 bg var(--surface-hover) text var(--muted)'
         }`}
       >
         <div className="flex items-center justify-between gap-3">
@@ -185,7 +185,7 @@ const StockForm = ({ material, onSubmit, onCancel, isSubmitting = false }) => {
           type="button"
           onClick={onCancel}
           disabled={isSubmitting}
-          className="rounded border border-gray-300 px-4 py-2 text-sm font-medium text-gray-600 transition-colors hover:bg-gray-50 disabled:cursor-not-allowed disabled:opacity-50"
+          className="rounded border border var(--border) px-4 py-2 text-sm font-medium text var(--muted) transition-colors hover:bg var(--surface-hover) disabled:cursor-not-allowed disabled:opacity-50"
         >
           Batal
         </button>

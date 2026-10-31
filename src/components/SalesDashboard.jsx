@@ -1,18 +1,18 @@
 import { formatRupiah } from '../utils/format.js';
 
 const STATUS_COLORS = {
-  Pending: '#C4A283',
-  Proses: '#44A6F1',
-  Selesai: '#2D2D2D',
+  Pending: '#E86A33',
+  Proses: '#1A3E5C',
+  Selesai: '#1A3E5C',
 };
 
 const SummaryCard = ({ icon, iconClassName, label, value, hint }) => (
-  <div className="bg-white border border-gray-200 rounded-xl p-5 shadow-sm">
+  <div className="bg var(--surface) border border var(--border) rounded-xl p-5 shadow-sm">
     <div className="flex items-start justify-between gap-3">
       <div>
-        <p className="text-xs font-medium uppercase tracking-wide text-gray-500">{label}</p>
+        <p className="text-xs font-medium uppercase tracking-wide text var(--muted)">{label}</p>
         <p className="mt-2 text-xl font-bold text-[#2D2D2D] break-words">{value}</p>
-        <p className="mt-1 text-xs text-gray-500">{hint}</p>
+        <p className="mt-1 text-xs text var(--muted)">{hint}</p>
       </div>
       <span
         className={`flex h-10 w-10 shrink-0 items-center justify-center rounded-lg ${iconClassName}`}
@@ -38,7 +38,7 @@ const SalesDashboard = ({ stats, hasActiveFilters, resultCount, totalCount }) =>
           <h2 className="text-lg font-semibold flex items-center gap-2 text-[#2D2D2D]">
             <i className="ph ph-chart-line-up text-[#44A6F1]"></i> Ringkasan Penjualan
           </h2>
-          <p className="text-sm text-gray-500 mt-1">
+          <p className="text-sm text var(--muted) mt-1">
             Menampilkan {resultCount} dari {totalCount} pesanan.
           </p>
         </div>
@@ -89,10 +89,10 @@ const SalesDashboard = ({ stats, hasActiveFilters, resultCount, totalCount }) =>
       </div>
 
       <div className="grid grid-cols-1 gap-4 lg:grid-cols-3">
-        <div className="bg-white border border-gray-200 rounded-xl p-5 shadow-sm lg:col-span-2">
+        <div className="bg var(--surface) border border var(--border) rounded-xl p-5 shadow-sm lg:col-span-2">
           <div className="flex items-center justify-between gap-3">
             <h3 className="text-sm font-semibold text-[#2D2D2D]">Penjualan per Kategori</h3>
-            <span className="text-xs text-gray-500">Omzet status selesai</span>
+            <span className="text-xs text var(--muted)">Omzet status selesai</span>
           </div>
 
           <div className="mt-4 space-y-4">
@@ -107,7 +107,7 @@ const SalesDashboard = ({ stats, hasActiveFilters, resultCount, totalCount }) =>
                   <div className="flex items-center justify-between gap-3 text-sm">
                     <div className="min-w-0">
                       <p className="font-medium text-[#2D2D2D]">{category.label}</p>
-                      <p className="text-xs text-gray-500">
+                      <p className="text-xs text var(--muted)">
                         {category.totalOrders} pesanan · {category.items} item
                       </p>
                     </div>
@@ -127,13 +127,13 @@ const SalesDashboard = ({ stats, hasActiveFilters, resultCount, totalCount }) =>
           </div>
         </div>
 
-        <div className="bg-white border border-gray-200 rounded-xl p-5 shadow-sm">
+        <div className="bg var(--surface) border border var(--border) rounded-xl p-5 shadow-sm">
           <h3 className="text-sm font-semibold text-[#2D2D2D]">Status Pesanan</h3>
           <div className="mt-4 space-y-3">
             {stats.byStatus.map((status) => (
               <div
                 key={status.status}
-                className="flex items-center justify-between rounded-lg border border-gray-100 bg-gray-50/70 px-3 py-2.5"
+                className="flex items-center justify-between rounded-lg border border var(--border) bg var(--surface-hover)/70 px-3 py-2.5"
               >
                 <div className="flex items-center gap-2">
                   <span
@@ -144,7 +144,7 @@ const SalesDashboard = ({ stats, hasActiveFilters, resultCount, totalCount }) =>
                 </div>
                 <div className="text-right">
                   <p className="text-sm font-semibold text-[#2D2D2D]">{status.count}</p>
-                  <p className="text-[11px] text-gray-500">{formatRupiah(status.totalValue)}</p>
+                  <p className="text-[11px] text var(--muted)">{formatRupiah(status.totalValue)}</p>
                 </div>
               </div>
             ))}

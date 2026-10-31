@@ -25,7 +25,7 @@ const TYPE_STYLES = {
 const MovementHistory = ({ movements }) => {
   if (movements.length === 0) {
     return (
-      <div className="rounded-lg border border-dashed border-gray-300 bg-gray-50 p-6 text-center text-sm text-gray-500">
+      <div className="rounded-lg border border-dashed border var(--border) bg var(--surface-hover) p-6 text-center text-sm text var(--muted)">
         Belum ada pergerakan stok. Riwayat akan muncul setelah restock atau
         penyesuaian pertama.
       </div>
@@ -35,7 +35,7 @@ const MovementHistory = ({ movements }) => {
   return (
     <div className="overflow-x-auto rounded-lg border border-gray-200">
       <table className="w-full min-w-[760px] text-left text-sm">
-        <thead className="bg-gray-50 text-xs font-semibold text-gray-600">
+        <thead className="bg var(--surface-hover) text-xs font-semibold text var(--muted)">
           <tr>
             <th className="px-4 py-3">Waktu</th>
             <th className="px-4 py-3">Bahan</th>
@@ -52,7 +52,7 @@ const MovementHistory = ({ movements }) => {
 
             return (
               <tr key={movement.id} className="border-t border-gray-100">
-                <td className="whitespace-nowrap px-4 py-3 text-xs text-gray-500">
+                <td className="whitespace-nowrap px-4 py-3 text-xs text var(--muted)">
                   {formatDateTime(movement.createdAt)}
                 </td>
                 <td className="px-4 py-3 font-medium text-[#2D2D2D]">
@@ -74,13 +74,13 @@ const MovementHistory = ({ movements }) => {
                   {positive ? '+' : ''}
                   {formatQuantity(movement.jumlah)}
                 </td>
-                <td className="whitespace-nowrap px-4 py-3 text-right text-gray-600">
+                <td className="whitespace-nowrap px-4 py-3 text-right text var(--muted)">
                   {formatQuantity(movement.stokSesudah)}
                 </td>
-                <td className="px-4 py-3 text-xs text-gray-500">
+                <td className="px-4 py-3 text-xs text var(--muted)">
                   <p>{movement.catatan || '-'}</p>
                   {movement.hargaSatuan !== null && (
-                    <p className="mt-0.5 text-[11px] text-gray-400">
+                    <p className="mt-0.5 text-[11px] text var(--muted)">
                       Harga saat itu {formatRupiah(movement.hargaSatuan)}
                     </p>
                   )}

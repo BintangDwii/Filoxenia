@@ -1,4 +1,5 @@
 import { VIEW_ITEMS } from '../../data/constants.js';
+import Logo from '../Logo';
 
 const Sidebar = ({ currentView, onNavigate, admin, onLogout, mobileOpen }) => (
   <nav
@@ -15,7 +16,7 @@ const Sidebar = ({ currentView, onNavigate, admin, onLogout, mobileOpen }) => (
           className="flex h-9 w-9 shrink-0 items-center justify-center rounded-xl shadow-md"
           style={{ background: 'var(--brand)' }}
         >
-          <i className="ph ph-waves text-white text-base" />
+          <Logo width={24} height={24} />
         </span>
         <div>
           <div
