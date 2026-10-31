@@ -1,5 +1,5 @@
 import { useCallback, useEffect, useState } from 'react';
-import Header from './components/Header.jsx';
+import AppShell from './components/layout/AppShell.jsx';
 import LoadingScreen from './components/LoadingScreen.jsx';
 import LoginPage from './components/LoginPage.jsx';
 import { VIEW_ITEMS } from './data/constants.js';
@@ -22,13 +22,11 @@ const InventoryApp = () => {
   useEffect(() => {
     const handleHashChange = () => setView(getViewFromHash());
     window.addEventListener('hashchange', handleHashChange);
-
     return () => window.removeEventListener('hashchange', handleHashChange);
   }, []);
 
   const handleNavigate = useCallback((nextView) => {
     if (!VIEW_VALUES.includes(nextView)) return;
-
     window.location.hash = `/${nextView}`;
     setView(nextView);
   }, []);
@@ -37,23 +35,23 @@ const InventoryApp = () => {
     await logout();
   };
 
-  return (
-    <div className="min-h-screen p-4 md:p-8">
-      <div className="mx-auto max-w-7xl">
-        <Header
-          admin={admin}
-          onLogout={handleLogout}
-          currentView={view}
-          onNavigate={handleNavigate}
-        />
+  const currentItem = VIEW_ITEMS.find((item) => item.value === view);
 
-        <main className="mt-2">
-          {view === 'orders' && <OrdersPage />}
-          {view === 'inventory' && <InventoryPage />}
-          {view === 'products' && <ProductsPage />}
-        </main>
+  return (
+    <AppShell
+      admin={admin}
+      onLogout={handleLogout}
+      currentView={view}
+      onNavigate={handleNavigate}
+      pageTitle={currentItem?.label}
+      pageSubtitle={currentItem?.description}
+    >
+      <div className="animate-fade-in">
+        {view === 'orders' && <OrdersPage />}
+        {view === 'inventory' && <InventoryPage />}
+        {view === 'products' && <ProductsPage />}
       </div>
-    </div>
+    </AppShell>
   );
 };
 
