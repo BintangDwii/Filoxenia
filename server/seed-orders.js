@@ -1,4 +1,4 @@
-import { db } from './db.js';
+import { db, initDb } from './db.js';
 import { validateOrderPayload } from './validators.js';
 
 const seedOrders = [
@@ -1356,18 +1356,37 @@ const seedOrders = [
   },
 ];
 
-// ---------- Validate & import (idempotent – INSERT OR IGNORE) ----------
+// ---------- Validate & import (idempotent - INSERT OR IGNORE) ----------
+await initDb();
+
 let valid = 0;
 for (const o of seedOrders) {
   try {
-    const payload = validateOrderPayload(o, { includeId: true, includeStatus: true, includeTanggal: true });
-    db.prepare(
-      'INSERT OR IGNORE INTO orders (id, nama, kategori, varian, tambahan, harga, qty, total, status, tanggal) VALUES (?,?,?,?,?,?,?,?,?,?)'
-    ).run(payload.id, payload.nama, payload.kategori, payload.varian, payload.tambahan,
-      payload.harga, payload.qty, payload.total, payload.status, payload.tanggal);
+    const payload = validateOrderPayload(o, {
+      includeId: true,
+      includeStatus: true,
+      includeTanggal: true,
+    });
+    await db.execute({
+      sql: `INSERT OR IGNORE INTO orders
+        (id, nama, kategori, varian, tambahan, harga, qty, total, status, tanggal)
+       VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)`,
+      args: [
+        payload.id,
+        payload.nama,
+        payload.kategori,
+        payload.varian,
+        payload.tambahan,
+        payload.harga,
+        payload.qty,
+        payload.total,
+        payload.status,
+        payload.tanggal,
+      ],
+    });
     valid += 1;
   } catch (e) {
     console.error(`[seed] Invalid order ${o.id}: ${e.message}`);
   }
 }
-console.log(`[seed] ${valid}/${seedOrders.length} orders imported (idempotent – re‑run safe).`);
+console.log(`[seed] ${valid}/${seedOrders.length} orders imported (idempotent - re-run safe).`);

@@ -26,7 +26,7 @@ router.post(
       return res.status(400).json({ error: 'Username dan password wajib diisi.' });
     }
 
-    const admin = getAdminByUsername(username);
+    const admin = await getAdminByUsername(username);
 
     if (!admin || !verifyPassword(password, admin.password_hash)) {
       return res.status(401).json({ error: 'Username atau password salah.' });

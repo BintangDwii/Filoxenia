@@ -20,23 +20,30 @@ const router = Router();
 
 router.use(requireAuth);
 
-router.get('/materials', (req, res) => {
-  res.json({
-    materials: listMaterials(),
-    summary: getInventorySummary(),
-  });
-});
+router.get(
+  '/materials',
+  asyncHandler(async (req, res) => {
+    const [materials, summary] = await Promise.all([
+      listMaterials(),
+      getInventorySummary(),
+    ]);
+    res.json({ materials, summary });
+  })
+);
 
-router.get('/movements', (req, res) => {
-  res.json({
-    movements: listStockMovements(Number(req.query.limit) || 100),
-  });
-});
+router.get(
+  '/movements',
+  asyncHandler(async (req, res) => {
+    res.json({
+      movements: await listStockMovements(Number(req.query.limit) || 100),
+    });
+  })
+);
 
 router.post(
   '/materials',
   asyncHandler(async (req, res) => {
-    const material = createMaterial(
+    const material = await createMaterial(
       validateMaterialPayload(req.body, { includeStock: true })
     );
 
@@ -48,7 +55,7 @@ router.put(
   '/materials/:id',
   asyncHandler(async (req, res) => {
     const id = parseRouteId(req.params.id, 'bahan');
-    const material = updateMaterial(id, validateMaterialPayload(req.body));
+    const material = await updateMaterial(id, validateMaterialPayload(req.body));
 
     if (!material) {
       return res.status(404).json({ error: 'Bahan baku tidak ditemukan.' });
@@ -62,7 +69,7 @@ router.delete(
   '/materials/:id',
   asyncHandler(async (req, res) => {
     const id = parseRouteId(req.params.id, 'bahan');
-    const deleted = deleteMaterial(id);
+    const deleted = await deleteMaterial(id);
 
     if (!deleted) {
       return res.status(404).json({ error: 'Bahan baku tidak ditemukan.' });
@@ -76,7 +83,7 @@ router.post(
   '/materials/:id/stock',
   asyncHandler(async (req, res) => {
     const id = parseRouteId(req.params.id, 'bahan');
-    const material = addStockMovement(id, validateStockPayload(req.body));
+    const material = await addStockMovement(id, validateStockPayload(req.body));
 
     if (!material) {
       return res.status(404).json({ error: 'Bahan baku tidak ditemukan.' });

@@ -16,14 +16,17 @@ const router = Router();
 
 router.use(requireAuth);
 
-router.get('/', (req, res) => {
-  res.json({ orders: listOrders() });
-});
+router.get(
+  '/',
+  asyncHandler(async (req, res) => {
+    res.json({ orders: await listOrders() });
+  })
+);
 
 router.get(
   '/:id',
   asyncHandler(async (req, res) => {
-    const detail = getOrderDetail(req.params.id);
+    const detail = await getOrderDetail(req.params.id);
 
     if (!detail) {
       return res.status(404).json({ error: 'Pesanan tidak ditemukan.' });
@@ -36,7 +39,7 @@ router.get(
 router.post(
   '/',
   asyncHandler(async (req, res) => {
-    const order = createOrder(validateOrderPayload(req.body));
+    const order = await createOrder(validateOrderPayload(req.body));
     res.status(201).json({ order });
   })
 );
@@ -62,7 +65,7 @@ router.post(
       })
     );
 
-    const imported = importOrders(orders);
+    const imported = await importOrders(orders);
 
     res.json({
       imported,
@@ -74,7 +77,7 @@ router.post(
 router.put(
   '/:id',
   asyncHandler(async (req, res) => {
-    const order = updateOrder(req.params.id, validateOrderPayload(req.body));
+    const order = await updateOrder(req.params.id, validateOrderPayload(req.body));
 
     if (!order) {
       return res.status(404).json({ error: 'Pesanan tidak ditemukan.' });
@@ -87,7 +90,7 @@ router.put(
 router.patch(
   '/:id/status',
   asyncHandler(async (req, res) => {
-    const order = cycleOrderStatus(req.params.id);
+    const order = await cycleOrderStatus(req.params.id);
 
     if (!order) {
       return res.status(404).json({ error: 'Pesanan tidak ditemukan.' });
@@ -100,7 +103,7 @@ router.patch(
 router.delete(
   '/:id',
   asyncHandler(async (req, res) => {
-    const deleted = deleteOrder(req.params.id);
+    const deleted = await deleteOrder(req.params.id);
 
     if (!deleted) {
       return res.status(404).json({ error: 'Pesanan tidak ditemukan.' });

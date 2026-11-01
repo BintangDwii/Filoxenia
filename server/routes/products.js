@@ -17,15 +17,18 @@ const router = Router();
 
 router.use(requireAuth);
 
-router.get('/', (req, res) => {
-  res.json({ products: listProducts() });
-});
+router.get(
+  '/',
+  asyncHandler(async (req, res) => {
+    res.json({ products: await listProducts() });
+  })
+);
 
 router.get(
   '/:id',
   asyncHandler(async (req, res) => {
     const id = parseRouteId(req.params.id, 'produk');
-    const detail = getProductDetail(id);
+    const detail = await getProductDetail(id);
 
     if (!detail) {
       return res.status(404).json({ error: 'Produk tidak ditemukan.' });
@@ -38,7 +41,7 @@ router.get(
 router.post(
   '/',
   asyncHandler(async (req, res) => {
-    const detail = createProduct(validateProductPayload(req.body));
+    const detail = await createProduct(validateProductPayload(req.body));
     res.status(201).json(detail);
   })
 );
@@ -47,7 +50,7 @@ router.put(
   '/:id',
   asyncHandler(async (req, res) => {
     const id = parseRouteId(req.params.id, 'produk');
-    const detail = updateProduct(id, validateProductPayload(req.body));
+    const detail = await updateProduct(id, validateProductPayload(req.body));
 
     if (!detail) {
       return res.status(404).json({ error: 'Produk tidak ditemukan.' });
@@ -61,7 +64,7 @@ router.delete(
   '/:id',
   asyncHandler(async (req, res) => {
     const id = parseRouteId(req.params.id, 'produk');
-    const deleted = deleteProduct(id);
+    const deleted = await deleteProduct(id);
 
     if (!deleted) {
       return res.status(404).json({ error: 'Produk tidak ditemukan.' });
