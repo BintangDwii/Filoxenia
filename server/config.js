@@ -6,7 +6,9 @@ export const config = {
   adminUsername: (process.env.ADMIN_USERNAME || '').trim(),
   adminPassword: process.env.ADMIN_PASSWORD || '',
   jwtSecret: process.env.JWT_SECRET || '',
-  databasePath: path.resolve(process.env.DATABASE_PATH || 'data/filoxenia.db'),
+  databasePath: process.env.VERCEL
+    ? '/tmp/filoxenia.db'
+    : path.resolve(process.env.DATABASE_PATH || 'data/filoxenia.db'),
   isProduction: process.env.NODE_ENV === 'production',
   cookieName: 'filoxenia_admin',
   sessionDays: 7,
