@@ -1,0 +1,61 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" role="img" aria-labelledby="title desc">
+  <title id="title">Stylized Maui-inspired fishhook emblem</title>
+  <desc id="desc">A clean Polynesian-inspired curved fishhook emblem in deep Pacific blue with coral and turquoise ornamental details.</desc>
+  <defs>
+    <style>
+      .navy{fill:#1A3E5C}
+      .coral{fill:#E86A33}
+      .turquoise{fill:#55B9CC}
+      .line{fill:none;stroke:#D2F3F8;stroke-width:9;stroke-linecap:round;stroke-linejoin:round}
+    </style>
+  </defs>
+
+  <!-- Small open halo keeps the mark balanced without a background. -->
+  <path d="M256 38a218 218 0 1 1-154 64" fill="none" stroke="#D2F3F8" stroke-width="14" stroke-linecap="round"/>
+
+  <!-- Main curved fishhook silhouette. -->
+  <path class="navy" d="M353 69
+    C423 83 463 140 463 211
+    C463 306 398 386 307 420
+    C231 449 149 428 96 374
+    C71 349 56 318 51 285
+    C46 251 54 218 77 190
+    C95 168 120 154 148 149
+    C129 169 119 191 119 216
+    C119 270 162 313 216 313
+    C275 313 319 269 319 211
+    C319 162 292 119 250 98
+    C281 81 319 66 353 69Z"/>
+
+  <!-- Hook's inward-facing point. -->
+  <path class="coral" d="M350 67
+    C323 79 301 101 290 128
+    C317 116 345 116 367 128
+    C357 103 351 84 350 67Z"/>
+
+  <!-- Inner negative-space curve to sharpen the fishhook profile. -->
+  <path fill="#F4FAFC" d="M250 98
+    C294 121 329 163 329 211
+    C329 275 280 323 216 323
+    C166 323 126 294 112 250
+    C130 280 163 296 198 296
+    C251 296 292 255 292 204
+    C292 162 274 125 250 98Z"/>
+
+  <!-- Decorative Polynesian-inspired bands along the outer curve. -->
+  <path class="turquoise" d="M390 129l17 15-16 15-17-15zM420 177l19 10-10 19-19-10zM424 235l20 4-4 21-20-4zM401 292l18 9-10 18-18-9zM359 342l15 13-14 15-15-13zM300 381l10 18-19 10-10-18z"/>
+  <path class="line" d="M380 112c31 30 49 70 52 113M413 261c-10 46-38 86-78 111"/>
+
+  <!-- Grip / wrapped base. -->
+  <path class="navy" d="M79 351c-8 15-18 28-31 40l52 57c18-7 35-17 50-29z"/>
+  <path class="coral" d="M68 381l58 63-13 12-58-63zM91 359l58 63-13 12-58-63z"/>
+  <path class="turquoise" d="M45 411l58 63-10 10-58-63z"/>
+
+  <!-- Finial at the end of the handle. -->
+  <path class="navy" d="M99 443c-18 2-31 13-36 29 17 2 32-4 42-17 10 13 25 19 42 17-5-16-18-27-36-29l-6-1z"/>
+  <circle class="coral" cx="105" cy="467" r="8"/>
+
+  <!-- Small wave motif at the center. -->
+  <path d="M178 367c18-17 38-17 56 0 18 17 38 17 56 0" fill="none" stroke="#55B9CC" stroke-width="10" stroke-linecap="round"/>
+  <path d="M193 389c12-10 24-10 36 0 12 10 24 10 36 0" fill="none" stroke="#E86A33" stroke-width="7" stroke-linecap="round"/>
+</svg>
