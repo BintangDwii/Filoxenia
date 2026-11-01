@@ -23,12 +23,7 @@ const ProductsPage = () => {
     updateProduct,
     deleteProduct,
   } = useProducts();
-  const {
-    materials,
-    isLoading: isMaterialsLoading,
-    reload: reloadMaterials,
-    createMaterial,
-  } = useInventory();
+  const { materials } = useInventory();
   const { toast, showToast } = useToast();
   const [detailProductId, setDetailProductId] = useState(null);
   const [calculatorOpen, setCalculatorOpen] = useState(false);
@@ -382,20 +377,13 @@ const ProductsPage = () => {
         onClose={() => { setEditingProduct(null); setIsProductFormOpen(false); }}
         isBusy={isSubmitting}
       >
-        {isMaterialsLoading ? (
-          <div className="flex items-center justify-center gap-2 py-10 text-sm text-gray-500">
-            <i className="ph ph-circle-notch animate-spin"></i>
-            Memuat data bahan...
-          </div>
-        ) : (
-          <ProductForm
-            product={editingProduct}
-            materials={materials}
-            onSubmit={handleProductSubmit}
-            onCancel={() => { setEditingProduct(null); setIsProductFormOpen(false); }}
-            isSubmitting={isSubmitting}
-          />
-        )}
+        <ProductForm
+          product={editingProduct}
+          materials={materials}
+          onSubmit={handleProductSubmit}
+          onCancel={() => { setEditingProduct(null); setIsProductFormOpen(false); }}
+          isSubmitting={isSubmitting}
+        />
       </Modal>
 
       <Modal

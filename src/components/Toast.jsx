@@ -24,7 +24,7 @@ const Toast = ({ toast }) => {
   return (
     <div
       role="status"
-      className={`fixed top-5 left-1/2 z-50 flex -translate-x-1/2 items-center gap-2 rounded border bg-white px-6 py-3 text-[#2D2D2D] shadow-md transition-all ${style.border}`}
+      className={`fixed top-5 left-1/2 z-[110] flex -translate-x-1/2 items-center gap-2 rounded border bg-white px-6 py-3 text-[#2D2D2D] shadow-md transition-all ${style.border}`}
     >
       <i className={`ph-fill ${style.icon} text-xl ${style.iconClassName}`}></i>
       {toast.message}

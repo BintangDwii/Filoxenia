@@ -1,4 +1,5 @@
 import { useEffect } from 'react';
+import { createPortal } from 'react-dom';
 
 const ConfirmDialog = ({
   open,
@@ -32,9 +33,9 @@ const ConfirmDialog = ({
     if (!isSubmitting) onCancel();
   };
 
-  return (
+  return createPortal(
     <div
-      className="fixed inset-0 z-50 flex items-center justify-center bg-black/40 p-4"
+      className="fixed inset-0 z-[100] flex items-center justify-center bg-black/40 p-4"
       onClick={handleCancel}
       role="presentation"
     >
@@ -77,7 +78,8 @@ const ConfirmDialog = ({
           </button>
         </div>
       </div>
-    </div>
+    </div>,
+    document.body
   );
 };
 

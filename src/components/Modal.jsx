@@ -1,4 +1,5 @@
 import { useEffect } from 'react';
+import { createPortal } from 'react-dom';
 
 const SIZE_CLASSES = {
   md: 'max-w-lg',
@@ -39,9 +40,9 @@ const Modal = ({
     if (!isBusy) onClose();
   };
 
-  return (
+  return createPortal(
     <div
-      className="fixed inset-0 z-50 flex items-start justify-center overflow-y-auto bg-black/40 p-4 py-8"
+      className="fixed inset-0 z-[100] flex items-start justify-center overflow-y-auto bg-black/40 p-4 py-8"
       onClick={handleBackdrop}
       role="presentation"
     >
@@ -80,7 +81,8 @@ const Modal = ({
           </div>
         )}
       </div>
-    </div>
+    </div>,
+    document.body
   );
 };
 
