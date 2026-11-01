@@ -405,7 +405,7 @@ const LoginPage = () => {
 
         {/* ── LEFT: Illustration ── */}
         <section className="lp-visual" aria-label="Filoxenia login background">
-          <img src="/login%20page%20image.png" className="lp-visual-image" alt="Filoxenia login background" />
+          <img src="/login-bg.png" className="lp-visual-image" alt="Filoxenia login background" />
           <div className="lp-brand-content" style={{ display: 'none' }}>
             <Logo width={40} height={40} />
             <h1 className="lp-brand-title">
