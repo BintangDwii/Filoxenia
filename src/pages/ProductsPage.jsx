@@ -33,6 +33,7 @@ const ProductsPage = () => {
   const [detailProductId, setDetailProductId] = useState(null);
   const [calculatorOpen, setCalculatorOpen] = useState(false);
   const [editingProduct, setEditingProduct] = useState(null);
+  const [isProductFormOpen, setIsProductFormOpen] = useState(false);
   const [deleteTarget, setDeleteTarget] = useState(null);
   const [isSubmitting, setIsSubmitting] = useState(false);
 
@@ -50,6 +51,7 @@ const ProductsPage = () => {
       }
 
       setEditingProduct(null);
+      setIsProductFormOpen(false);
       return true;
     } catch (err) {
       showToast(err.message, 'error');
@@ -144,13 +146,14 @@ const ProductsPage = () => {
   ).length;
   const averageSellingPrice = products.length
     ? products.reduce(
-        (total, product) => total + product.pricing.sellingPriceFinal,
-        0
-      ) / products.length
+      (total, product) => total + product.pricing.sellingPriceFinal,
+      0
+    ) / products.length
     : 0;
 
   const handleEdit = (product) => {
     setEditingProduct(product);
+    setIsProductFormOpen(true);
   };
 
   const handleOpenCalculator = (product) => {
@@ -249,7 +252,7 @@ const ProductsPage = () => {
             </button>
             <button
               type="button"
-              onClick={() => setEditingProduct(null)}
+              onClick={() => { setEditingProduct(null); setIsProductFormOpen(true); }}
               className="inline-flex items-center justify-center gap-2 rounded bg-[#2F8A4B] px-4 py-2.5 text-sm font-medium text-white transition-colors hover:bg-opacity-90"
             >
               <i className="ph ph-plus-circle text-lg"></i>
@@ -267,7 +270,7 @@ const ProductsPage = () => {
               action={
                 <button
                   type="button"
-                  onClick={() => setEditingProduct(null)}
+                  onClick={() => { setEditingProduct(null); setIsProductFormOpen(true); }}
                   className="inline-flex items-center gap-2 rounded bg-[#2F8A4B] px-4 py-2 text-sm font-medium text-white transition-colors hover:bg-opacity-90"
                 >
                   <i className="ph ph-plus"></i>
@@ -312,11 +315,10 @@ const ProductsPage = () => {
                     <td className="px-6 py-4 text-gray-600">{product.kategori}</td>
                     <td className="px-6 py-4">
                       <span
-                        className={`inline-flex items-center rounded-full px-2.5 py-1 text-[11px] font-semibold ${
-                          product.modeBiaya === 'bom'
+                        className={`inline-flex items-center rounded-full px-2.5 py-1 text-[11px] font-semibold ${product.modeBiaya === 'bom'
                             ? 'bg-[#E8F7EC] text-[#2F8A4B]'
                             : 'bg-[#F1ECFA] text-[#7C4DC4]'
-                        }`}
+                          }`}
                       >
                         {product.modeBiaya}
                       </span>
@@ -367,7 +369,7 @@ const ProductsPage = () => {
       </section>
 
       <Modal
-        open={Boolean(editingProduct)}
+        open={isProductFormOpen}
         title={
           editingProduct ? `Edit Produk: ${editingProduct.nama}` : 'Tambah Produk Baru'
         }
@@ -377,7 +379,7 @@ const ProductsPage = () => {
             : 'Buat produk baru dari manual biaya bahan atau daftar resep.'
         }
         size="xl"
-        onClose={() => setEditingProduct(null)}
+        onClose={() => { setEditingProduct(null); setIsProductFormOpen(false); }}
         isBusy={isSubmitting}
       >
         {isMaterialsLoading ? (
@@ -390,7 +392,7 @@ const ProductsPage = () => {
             product={editingProduct}
             materials={materials}
             onSubmit={handleProductSubmit}
-            onCancel={() => setEditingProduct(null)}
+            onCancel={() => { setEditingProduct(null); setIsProductFormOpen(false); }}
             isSubmitting={isSubmitting}
           />
         )}
